@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_sunat_decolecta" model="ir.ui.view">
+        <field name="name">res.partner.form.sunat.decolecta</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="document_type" />
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <button name="action_consultar_sunat" 
+                        string="Consultar SUNAT" 
+                        type="object" 
+                        class="btn-primary"
+                        help="Consulta los datos en SUNAT vía Decolecta"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
