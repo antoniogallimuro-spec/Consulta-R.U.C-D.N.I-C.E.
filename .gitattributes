@@ -1,0 +1,14 @@
+# Normaliza finales de linea en el repo (LF), independientemente de core.autocrlf=true de Windows
+* text=auto eol=lf
+*.py text eol=lf
+*.xml text eol=lf
+*.csv text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+
+# Binarios
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary

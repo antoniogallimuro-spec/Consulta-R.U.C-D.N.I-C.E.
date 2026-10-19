@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# Odoo / entorno local
+*.log
+*.sqlite
+.env
+odoo.conf
+filestore/
+
+# Editores y sistema
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
