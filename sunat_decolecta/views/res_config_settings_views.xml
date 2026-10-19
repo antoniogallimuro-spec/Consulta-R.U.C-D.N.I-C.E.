@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_sunat_decolecta" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sunat.decolecta</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="SUNAT / Decolecta"
+                     string="SUNAT / Decolecta"
+                     name="sunat_decolecta"
+                     logo="/base/static/description/icon.png"
+                     groups="base.group_system">
+                    <block title="Conexión con Decolecta" name="sunat_decolecta_connection">
+                        <setting id="sunat_decolecta_token_setting"
+                                 string="Token de Decolecta"
+                                 help="Token Bearer de tu cuenta en decolecta.com. Se usa para consultar RUC (SUNAT) y DNI (RENIEC).">
+                            <field name="sunat_decolecta_api_token" password="True"/>
+                            <div class="mt-2">
+                                <button name="action_sunat_decolecta_test_token"
+                                        type="object"
+                                        string="Probar token"
+                                        class="btn-link"
+                                        icon="fa-plug"/>
+                            </div>
+                        </setting>
+                        <setting id="sunat_decolecta_quota_setting"
+                                 string="Consumo del mes"
+                                 help="Consultas registradas este mes en Odoo. Se compara con la cuota mensual de tu plan de Decolecta.">
+                            <field name="sunat_decolecta_month_usage" readonly="1"/>
+                            <div class="content-group mt-2">
+                                <field name="sunat_decolecta_monthly_quota"/>
+                            </div>
+                            <div class="mt-2">
+                                <button name="action_sunat_decolecta_open_log"
+                                        type="object"
+                                        string="Ver registro de consumo"
+                                        class="btn-link"
+                                        icon="fa-list"/>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Consulta de contactos" name="sunat_decolecta_partners">
+                        <setting id="sunat_decolecta_auto_setting"
+                                 string="Consulta automática"
+                                 help="Consulta SUNAT/RENIEC al escribir el número de documento. Desactívalo para consultar solo con el botón &quot;Consultar SUNAT&quot; y ahorrar consultas de tu plan.">
+                            <field name="sunat_decolecta_auto_query"/>
+                        </setting>
+                        <setting id="sunat_decolecta_auto_mode_setting"
+                                 string="Detalle de la consulta automática"
+                                 help="El modo básico solo trae razón social, dirección y estado. El completo agrega anexos, actividad económica y trabajadores.">
+                            <field name="sunat_decolecta_auto_query_mode"/>
+                        </setting>
+                        <setting id="sunat_decolecta_cache_setting"
+                                 string="Caché de consultas"
+                                 help="Reutiliza los datos ya guardados si el contacto fue consultado hace menos días. Usa 0 para consultar siempre.">
+                            <field name="sunat_decolecta_cache_days"/>
+                        </setting>
+                    </block>
+                    <block title="Tipo de cambio" name="sunat_decolecta_rates">
+                        <setting id="sunat_decolecta_rate_source_setting"
+                                 string="Fuente del tipo de cambio"
+                                 help="SUNAT publica compra y venta; SBS publica el tipo de cambio promedio y el contable.">
+                            <field name="sunat_decolecta_rate_source"/>
+                            <field name="sunat_decolecta_rate_price"/>
+                        </setting>
+                        <setting id="sunat_decolecta_rate_currency_setting"
+                                 string="Moneda y automatización"
+                                 help="Moneda extranjera a convertir. El cron diario registra la tasa del día si aún no existe.">
+                            <field name="sunat_decolecta_rate_currency"/>
+                            <field name="sunat_decolecta_rate_cron_enabled"/>
+                            <div class="mt-2">
+                                <button name="action_sunat_decolecta_update_rate"
+                                        type="object"
+                                        string="Actualizar tipo de cambio"
+                                        class="btn-link"
+                                        icon="fa-refresh"/>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Facturación" name="sunat_decolecta_invoicing">
+                        <setting id="sunat_decolecta_invoice_setting"
+                                 string="Validación de RUC al publicar"
+                                 help="Usa los datos de SUNAT ya guardados en el contacto (no consume consultas). Puedes omitir la validación publicando con el contexto sunat_decolecta_skip_validation.">
+                            <field name="sunat_decolecta_invoice_validation"/>
+                        </setting>
+                    </block>
+                    <block title="Comisiones de AFP" name="sunat_decolecta_afp">
+                        <setting id="sunat_decolecta_afp_setting"
+                                 string="Comisiones AFP (SBS)"
+                                 help="Descarga las comisiones vigentes de las AFP para el último periodo publicado y las guarda para consulta.">
+                            <div>
+                                <button name="action_sunat_decolecta_update_afp"
+                                        type="object"
+                                        string="Actualizar comisiones AFP"
+                                        class="btn-link"
+                                        icon="fa-refresh"/>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sunat_decolecta_rate_wizard_form" model="ir.ui.view">
+        <field name="name">sunat.decolecta.rate.wizard.form</field>
+        <field name="model">sunat.decolecta.rate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Actualizar tipo de cambio">
+                <field name="state" invisible="1"/>
+                <group invisible="state != 'draft'">
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="currency_name"/>
+                    </group>
+                    <group>
+                        <field name="source"/>
+                        <field name="price"/>
+                        <field name="skip_weekends"/>
+                        <field name="force"/>
+                    </group>
+                </group>
+                <group string="Resultado" invisible="state != 'done'">
+                    <field name="result" nolabel="1" colspan="2"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Aplicar"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_close" type="object" string="Cerrar"
+                            class="btn-primary" invisible="state != 'done'"/>
+                    <button string="Cancelar" special="cancel" invisible="state == 'done'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

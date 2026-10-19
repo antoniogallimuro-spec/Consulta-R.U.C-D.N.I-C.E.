@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sunat_decolecta_batch_wizard_form" model="ir.ui.view">
+        <field name="name">sunat.decolecta.batch.wizard.form</field>
+        <field name="model">sunat.decolecta.batch.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Consulta masiva SUNAT / RENIEC">
+                <field name="state" invisible="1"/>
+                <group invisible="state != 'draft'">
+                    <group string="Contactos">
+                        <field name="partner_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                        <field name="only_missing" invisible="partner_ids"/>
+                        <field name="limit" invisible="partner_ids"/>
+                    </group>
+                    <group string="Consulta">
+                        <field name="endpoint_mode"/>
+                        <field name="force"/>
+                    </group>
+                </group>
+                <group invisible="state != 'draft'">
+                    <group string="Estimación">
+                        <field name="candidate_count"/>
+                        <field name="query_count"/>
+                    </group>
+                    <group string="Cuota del mes">
+                        <field name="quota_used"/>
+                        <field name="quota_total"/>
+                        <field name="quota_left"/>
+                    </group>
+                </group>
+                <group string="Resultado" invisible="state != 'done'">
+                    <group>
+                        <field name="ok_count"/>
+                        <field name="skipped_count"/>
+                        <field name="error_count"/>
+                    </group>
+                    <field name="result" nolabel="1" colspan="2"/>
+                </group>
+                <footer>
+                    <button name="action_run" type="object" string="Consultar"
+                            class="btn-primary" invisible="state != 'draft'"
+                            confirm="Se consumirán las consultas indicadas en &quot;Consultas a la API&quot;. ¿Continuar?"/>
+                    <button name="action_close" type="object" string="Cerrar"
+                            class="btn-primary" invisible="state != 'done'"/>
+                    <button string="Cancelar" special="cancel" invisible="state == 'done'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sunat_decolecta_batch" model="ir.actions.act_window">
+        <field name="name">Consulta masiva SUNAT / RENIEC</field>
+        <field name="res_model">sunat.decolecta.batch.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+</odoo>

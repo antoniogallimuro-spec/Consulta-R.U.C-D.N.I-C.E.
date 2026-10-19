@@ -1,1 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sunat_decolecta_log_system,sunat.decolecta.log system,model_sunat_decolecta_log,base.group_system,1,0,0,0
+access_sunat_afp_comision_user,sunat.afp.comision user,model_sunat_afp_comision,base.group_user,1,0,0,0
+access_sunat_afp_comision_system,sunat.afp.comision system,model_sunat_afp_comision,base.group_system,1,1,1,1
+access_sunat_decolecta_rate_wizard,sunat.decolecta.rate.wizard system,model_sunat_decolecta_rate_wizard,base.group_system,1,1,1,1
+access_sunat_decolecta_batch_wizard,sunat.decolecta.batch.wizard system,model_sunat_decolecta_batch_wizard,base.group_system,1,1,1,1
+

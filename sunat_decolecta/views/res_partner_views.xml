@@ -1,20 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="view_partner_form_sunat_decolecta" model="ir.ui.view">
         <field name="name">res.partner.form.sunat.decolecta</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='vat']" position="before">
-                <field name="document_type" />
-            </xpath>
             <xpath expr="//field[@name='vat']" position="after">
-                <button name="action_consultar_sunat" 
-                        string="Consultar SUNAT" 
-                        type="object" 
-                        class="btn-primary"
-                        help="Consulta los datos en SUNAT vía Decolecta"/>
+                <button name="action_consultar_sunat"
+                        string="Consultar SUNAT"
+                        type="object"
+                        class="btn-link"
+                        icon="fa-search"
+                        invisible="not vat"
+                        help="Consulta RUC o DNI en SUNAT/RENIEC vía Decolecta"/>
+                <button name="action_forzar_consulta_sunat"
+                        string="Forzar consulta"
+                        type="object"
+                        class="btn-link"
+                        icon="fa-refresh"
+                        invisible="not sunat_decolecta_last_query"
+                        help="Ignora la caché y vuelve a consultar SUNAT/RENIEC"/>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="inside">
+                <group string="Datos SUNAT" name="sunat_decolecta_data">
+                    <group>
+                        <field name="sunat_decolecta_commercial_name"/>
+                        <field name="sunat_decolecta_state"/>
+                        <field name="sunat_decolecta_condition"/>
+                        <field name="sunat_decolecta_company_type"
+                               invisible="not sunat_decolecta_company_type"/>
+                        <field name="sunat_decolecta_economic_activity"
+                               invisible="not sunat_decolecta_economic_activity"/>
+                    </group>
+                    <group>
+                        <field name="sunat_decolecta_workers"
+                               invisible="not sunat_decolecta_workers"/>
+                        <field name="sunat_decolecta_billing_type"
+                               invisible="not sunat_decolecta_billing_type"/>
+                        <field name="sunat_decolecta_accounting_type"
+                               invisible="not sunat_decolecta_accounting_type"/>
+                        <field name="sunat_decolecta_foreign_trade"
+                               invisible="not sunat_decolecta_foreign_trade"/>
+                        <field name="sunat_decolecta_last_query"/>
+                    </group>
+                </group>
+                <div class="d-flex flex-wrap gap-2 mb-3"
+                     invisible="not sunat_decolecta_is_withholding_agent and not sunat_decolecta_is_good_taxpayer">
+                    <span class="badge rounded-pill text-bg-warning"
+                          invisible="not sunat_decolecta_is_withholding_agent">Agente de retención</span>
+                    <span class="badge rounded-pill text-bg-success"
+                          invisible="not sunat_decolecta_is_good_taxpayer">Buen contribuyente</span>
+                </div>
+                <group string="Dirección y anexos SUNAT"
+                       name="sunat_decolecta_address"
+                       invisible="not sunat_decolecta_ubigeo and not sunat_decolecta_address_detail and not sunat_decolecta_anexos">
+                    <field name="sunat_decolecta_anexos" invisible="1"/>
+                    <group>
+                        <field name="sunat_decolecta_ubigeo"
+                               invisible="not sunat_decolecta_ubigeo"/>
+                        <field name="sunat_decolecta_address_detail"
+                               invisible="not sunat_decolecta_address_detail"/>
+                        <field name="sunat_decolecta_anexos_count"
+                               invisible="not sunat_decolecta_anexos_count"/>
+                        <button name="action_crear_direcciones_entrega"
+                                string="Crear direcciones de entrega"
+                                type="object"
+                                class="btn-link"
+                                icon="fa-map-marker"
+                                invisible="not sunat_decolecta_anexos"
+                                help="Crea un contacto de tipo &quot;Dirección de entrega&quot; por cada anexo"/>
+                    </group>
+                    <group>
+                        <field name="sunat_decolecta_anexos_html"
+                               nolabel="1"
+                               invisible="not sunat_decolecta_anexos_html"/>
+                    </group>
+                </group>
             </xpath>
         </field>
     </record>
+
+    <record id="view_partner_tree_sunat_decolecta" model="ir.ui.view">
+        <field name="name">res.partner.tree.sunat.decolecta</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="sunat_decolecta_state" optional="hide"/>
+                <field name="sunat_decolecta_condition" optional="hide"/>
+                <field name="sunat_decolecta_last_query" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>
+

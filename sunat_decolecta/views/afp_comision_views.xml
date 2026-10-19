@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sunat_afp_comision_tree" model="ir.ui.view">
+        <field name="name">sunat.afp.comision.tree</field>
+        <field name="model">sunat.afp.comision</field>
+        <field name="arch" type="xml">
+            <list string="Comisiones AFP" create="0" edit="0" delete="0">
+                <field name="periodo"/>
+                <field name="afp"/>
+                <field name="comision_sobre_flujo"/>
+                <field name="comision_mixta_sobre_flujo"/>
+                <field name="comision_mixta_sobre_saldo"/>
+                <field name="comision_anual_sobre_saldo"/>
+                <field name="comision_fija"/>
+                <field name="prima_de_seguro"/>
+                <field name="aporte_obligatorio"/>
+                <field name="remuneracion_maxima_asegurable"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sunat_afp_comision_form" model="ir.ui.view">
+        <field name="name">sunat.afp.comision.form</field>
+        <field name="model">sunat.afp.comision</field>
+        <field name="arch" type="xml">
+            <form string="Comisión AFP" create="0" edit="0" delete="0">
+                <group>
+                    <group>
+                        <field name="afp"/>
+                        <field name="periodo"/>
+                        <field name="comision_fija"/>
+                        <field name="comision_sobre_flujo"/>
+                    </group>
+                    <group>
+                        <field name="comision_mixta_sobre_flujo"/>
+                        <field name="comision_mixta_sobre_saldo"/>
+                        <field name="comision_anual_sobre_saldo"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="prima_de_seguro"/>
+                        <field name="aporte_obligatorio"/>
+                    </group>
+                    <group>
+                        <field name="remuneracion_maxima_asegurable"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sunat_afp_comision_search" model="ir.ui.view">
+        <field name="name">sunat.afp.comision.search</field>
+        <field name="model">sunat.afp.comision</field>
+        <field name="arch" type="xml">
+            <search string="Comisiones AFP">
+                <field name="afp"/>
+                <field name="periodo"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_afp" string="AFP"
+                            context="{'group_by': 'afp'}"/>
+                    <filter name="group_periodo" string="Periodo"
+                            context="{'group_by': 'periodo'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sunat_afp_comision" model="ir.actions.act_window">
+        <field name="name">Comisiones AFP</field>
+        <field name="res_model">sunat.afp.comision</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sunat_afp_comision_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Sin comisiones cargadas</p>
+            <p>Usa el botón "Actualizar comisiones AFP" en Ajustes &gt; SUNAT / Decolecta
+               o espera al cron mensual.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_sunat_afp_comision"
+              name="Comisiones AFP"
+              parent="menu_sunat_decolecta_root"
+              action="action_sunat_afp_comision"
+              sequence="20"/>
+
+</odoo>
